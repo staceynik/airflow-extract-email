@@ -1,0 +1,5 @@
+deploy_dag:
+  stage: deploy
+  script:
+    - echo "Deploying Airflow DAG"
+    - python3 /home/karpov/airfolw-extract-email/dags/extract_email_dag.py
