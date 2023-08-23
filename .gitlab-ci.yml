@@ -1,6 +1,7 @@
 deploy_dag:
   stage: deploy
   script:
-    - pip install -r requirements.txt
-    - echo "Deploying Airflow DAG"
-    - python3 dags/extract_email_dag.py
+  - apt-get update -y
+  - apt-get install -y python3 python3-pip
+  - pip3 install -r requirements.txt
+  - python3 dags/extract_email_dag.py
