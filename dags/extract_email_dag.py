@@ -1,14 +1,12 @@
 import sys
 import os
 
-
 current_dir = os.path.dirname(os.path.abspath(__file__))
 plugins_dir = os.path.join(current_dir, 'plugins')
 sys.path.append(plugins_dir)
 
-
 from airflow import DAG
-from airflow.operators.empty_operator import EmptyOperator
+from airflow.operators.dummy_operator import DummyOperator
 from airflow.operators.python_operator import PythonOperator
 from datetime import datetime, timedelta
 from operators.email_extract_operator import EmailExtractOperator
@@ -27,7 +25,7 @@ dag = DAG(
     schedule_interval=timedelta(days=1),
 )
 
-start_task = EmptyOperator(task_id='start', dag=dag)
+start_task = DummyOperator(task_id='start', dag=dag)
 
 extract_task = EmailExtractOperator(
     task_id='extract_emails',
