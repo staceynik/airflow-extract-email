@@ -1,7 +1,19 @@
-deploy_dag:
-  stage: deploy
-  script:
+image: ruby:3.1
+
+before_script:
   - apt-get update -y
   - apt-get install -y python3 python3-pip
-  - pip3 install -r requirements.txt
-  - python3 dags/extract_email_dag.py
+
+stages:
+  - deploy
+
+deploy:
+  stage: deploy
+  script:
+    - pip3 install virtualenv
+    - virtualenv venv
+    - source venv/bin/activate
+    - pip3 install -r requirements.txt
+    - python3 dags/extract_email_dag.py
+  only:
+    - main
