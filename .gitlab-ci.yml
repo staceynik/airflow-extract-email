@@ -2,4 +2,4 @@ deploy_dag:
   stage: deploy
   script:
     - echo "Deploying Airflow DAG"
-    - python3 airflow-extract-email/dags/extract_email_dag.py
+    - python3 staceygroup/airflow-extract-email/dags/extract_email_dag.py
