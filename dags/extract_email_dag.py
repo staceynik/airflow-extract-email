@@ -1,5 +1,10 @@
 import os
 import sys
+from airflow import DAG
+from airflow.operators.dummy_operator import DummyOperator
+from airflow.operators.python_operator import PythonOperator
+from operators.email_extract_operator import EmailExtractOperator
+from datetime import datetime, timedelta
 
 # Получить абсолютный путь к текущей директории
 current_dir = os.path.abspath(os.path.dirname(__file__))
@@ -11,11 +16,6 @@ plugins_folder = os.path.join(current_dir, '..', 'plugins')
 sys.path.append(plugins_folder)
 
 # Осуществить импорты, включая операторы
-from airflow import DAG
-from airflow.operators.dummy_operator import DummyOperator
-from airflow.operators.python_operator import PythonOperator
-from operators.email_extract_operator import EmailExtractOperator
-from datetime import datetime, timedelta
 
 default_args = {
     'owner': 'airflow',
