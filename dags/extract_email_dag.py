@@ -1,9 +1,7 @@
 import sys
 import os
 
-current_dir = os.path.abspath(os.path.dirname(__file__))
-dags_folder = os.path.join(current_dir, 'dags')
-sys.path.append(dags_folder)
+sys.path.insert(0, '/builds/staceygroup/airflow-extract-email/plugins/operators')
 
 from airflow import DAG
 from airflow.operators.dummy_operator import DummyOperator
