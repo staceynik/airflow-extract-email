@@ -1,20 +1,14 @@
 import os
 import sys
-
-print("Current sys.path:", sys.path)
-
 from airflow import DAG
 from airflow.operators.empty import EmptyOperator
 from datetime import datetime, timedelta
 
 current_dir = os.path.abspath(os.path.dirname(__file__))
-
 plugins_folder = os.path.join(current_dir, '..', 'plugins')
-
 sys.path.append(plugins_folder)
 
 from plugins.operators.email_extract_operator import EmailExtractOperator
-
 
 
 default_args = {
