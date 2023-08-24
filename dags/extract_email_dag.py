@@ -22,7 +22,7 @@ start_task = DummyOperator(task_id='start', dag=dag)
 
 extract_task = PythonOperator(
     task_id='extract_emails',
-    python_callable=EmailExtractOperator().execute,
+    python_callable=EmailExtractOperator(),
     dag=dag,
 )
 
