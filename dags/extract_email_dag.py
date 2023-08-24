@@ -18,7 +18,7 @@ plugins_folder = os.path.join(current_dir, '..', 'plugins')
 sys.path.append(plugins_folder)
 
 from airflow.operators.python import PythonOperator
-from plugins.operators.email_extract_operator import EmailExtractOperator
+from ..plugins.operators.email_extract_operator import EmailExtractOperator
 
 
 
