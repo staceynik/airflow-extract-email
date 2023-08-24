@@ -2,7 +2,7 @@ from airflow import DAG
 from airflow.operators.dummy_operator import DummyOperator
 from airflow.operators.python_operator import PythonOperator
 from datetime import datetime, timedelta
-from operators.email_extract_operator import EmailExtractOperator
+from plugins.operators.email_extract_operator import EmailExtractOperator
 
 default_args = {
     'owner': 'airflow',
