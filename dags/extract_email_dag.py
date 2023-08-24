@@ -36,7 +36,7 @@ dag = DAG(
     schedule_interval=timedelta(days=1),
 )
 
-start_task = DummyOperator(task_id='start', dag=dag)
+start_task = EmptyOperator(task_id='start', dag=dag)
 
 extract_task = PythonOperator(
     task_id='extract_emails',
