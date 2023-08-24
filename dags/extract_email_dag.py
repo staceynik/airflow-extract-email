@@ -1,20 +1,16 @@
 import os
 import sys
 
-# Печатаем текущие пути поиска перед всеми другими операциями
 print("Current sys.path:", sys.path)
 
 from airflow import DAG
 from airflow.operators.empty import EmptyOperator
 from datetime import datetime, timedelta
 
-# Получить абсолютный путь к текущей директории
 current_dir = os.path.abspath(os.path.dirname(__file__))
 
-# Сформировать путь к папке plugins (на уровень выше текущей директории)
 plugins_folder = os.path.join(current_dir, '..', 'plugins')
 
-# Добавить этот путь в список sys.path
 sys.path.append(plugins_folder)
 
 from plugins.operators.email_extract_operator import EmailExtractOperator
@@ -37,7 +33,7 @@ dag = DAG(
 
 start_task = EmptyOperator(task_id='start', dag=dag)
 
-extract_task = PythonOperator(
+extract_task = EmailExtractOperator(
     task_id='extract_emails',
     dag=dag
 )
