@@ -1,10 +1,3 @@
-import sys
-import os
-
-current_dir = os.path.dirname(os.path.abspath(__file__))
-plugins_dir = os.path.join(current_dir, 'plugins')
-sys.path.append(plugins_dir)
-
 from airflow import DAG
 from airflow.operators.dummy_operator import DummyOperator
 from airflow.operators.python_operator import PythonOperator
