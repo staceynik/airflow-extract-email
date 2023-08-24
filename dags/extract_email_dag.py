@@ -2,7 +2,7 @@ import os
 import sys
 from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
-from operators.email_extract_operator import EmailExtractOperator
+from plugins.operators.email_extract_operator import EmailExtractOperator
 from datetime import datetime, timedelta
 
 # Получить абсолютный путь к текущей директории
