@@ -1,7 +1,6 @@
 import os
 import sys
 from airflow import DAG
-from airflow.operators.empty.EmptyOperator import EmptyOperator
 from airflow.operators.python.PythonOperator import PythonOperator
 from operators.email_extract_operator import EmailExtractOperator
 from datetime import datetime, timedelta
@@ -16,6 +15,7 @@ plugins_folder = os.path.join(current_dir, '..', 'plugins')
 sys.path.append(plugins_folder)
 
 # Осуществить импорты, включая операторы
+from airflow.operators.empty import EmptyOperator
 
 default_args = {
     'owner': 'airflow',
