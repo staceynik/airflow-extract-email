@@ -17,7 +17,8 @@ sys.path.append(plugins_folder)
 from airflow.operators.python import PythonOperator
 from plugins.operators.email_extract_operator import EmailExtractOperator
 
-# ... [оставшийся код]
+# Печатаем текущие пути поиска
+print(sys.path)
 
 default_args = {
     'owner': 'airflow',
