@@ -33,15 +33,14 @@ default_args = {
 dag = DAG(
     'extract_email_dag',
     default_args=default_args,
-    schedule_interval=timedelta(days=1),
+    schedule=timedelta(days=1),
 )
 
 start_task = EmptyOperator(task_id='start', dag=dag)
 
 extract_task = PythonOperator(
     task_id='extract_emails',
-    python_callable=EmailExtractOperator().execute,  # Обратите внимание на добавление .execute
-    dag=dag,
+    dag=dag
 )
 
 start_task >> extract_task
