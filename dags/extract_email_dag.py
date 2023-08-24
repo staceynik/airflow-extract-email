@@ -5,7 +5,7 @@ import sys
 print("Current sys.path:", sys.path)
 
 from airflow import DAG
-from airflow.operators.empty import EmptyOperator  # Импорт EmptyOperator
+from airflow.operators.empty import EmptyOperator
 from datetime import datetime, timedelta
 
 # Получить абсолютный путь к текущей директории
@@ -17,7 +17,6 @@ plugins_folder = os.path.join(current_dir, '..', 'plugins')
 # Добавить этот путь в список sys.path
 sys.path.append(plugins_folder)
 
-from airflow.operators.python import PythonOperator
 from plugins.operators.email_extract_operator import EmailExtractOperator
 
 
