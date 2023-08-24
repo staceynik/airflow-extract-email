@@ -9,6 +9,8 @@ class EmailExtractOperator(BaseOperator):
         super().__init__(*args, **kwargs)
 
     def execute(self, context):
+        self.log.info("Executing the EmailExtractOperator")
+
         response = requests.get("https://jsonplaceholder.typicode.com/comments")
         comments = response.json()
 
@@ -27,7 +29,6 @@ class EmailExtractOperator(BaseOperator):
 
         self.log.info("Connected to the database")
 
-
         cursor = connection.cursor()
         cursor.execute("""
             CREATE TABLE IF NOT EXISTS extracted_emails (
@@ -43,12 +44,11 @@ class EmailExtractOperator(BaseOperator):
                 "INSERT INTO extracted_emails (email, comment) VALUES (%s, %s)",
                 (comment['email'], comment['body'])
             )
-        self.log.info(f"Inserted comment {comment['body']} from {comment['email']}")
+            self.log.info(f"Inserted comment {comment['body']} from {comment['email']}")
 
         connection.commit()
         cursor.close()
         connection.close()
-
 
         cursor.execute("SELECT to_regclass('public.extracted_emails');")
         result = cursor.fetchone()
