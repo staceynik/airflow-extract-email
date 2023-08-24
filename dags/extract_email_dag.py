@@ -1,5 +1,9 @@
 import os
 import sys
+
+# Печатаем текущие пути поиска перед всеми другими операциями
+print("Current sys.path:", sys.path)
+
 from airflow import DAG
 from airflow.operators.empty import EmptyOperator  # Импорт EmptyOperator
 from datetime import datetime, timedelta
@@ -13,12 +17,10 @@ plugins_folder = os.path.join(current_dir, '..', 'plugins')
 # Добавить этот путь в список sys.path
 sys.path.append(plugins_folder)
 
-# Теперь импортируйте ваш оператор и другие модули после добавления пути к sys.path
 from airflow.operators.python import PythonOperator
 from plugins.operators.email_extract_operator import EmailExtractOperator
 
-# Печатаем текущие пути поиска
-print(sys.path)
+
 
 default_args = {
     'owner': 'airflow',
