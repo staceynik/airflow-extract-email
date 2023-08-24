@@ -1,8 +1,15 @@
+import sys
+import os
+
+current_dir = os.path.abspath(os.path.dirname(__file__))
+dags_folder = os.path.join(current_dir, 'dags')
+sys.path.append(dags_folder)
+
 from airflow import DAG
 from airflow.operators.dummy_operator import DummyOperator
 from airflow.operators.python_operator import PythonOperator
 from datetime import datetime, timedelta
-from plugins.operators.email_extract_operator import EmailExtractOperator
+from operators.email_extract_operator import EmailExtractOperator
 
 default_args = {
     'owner': 'airflow',
