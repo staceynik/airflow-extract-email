@@ -1,12 +1,19 @@
-import sys
 import os
+import sys
 
-sys.path.insert(0, '/builds/staceygroup/airflow-extract-email/plugins/operators')
+# Получить абсолютный путь к текущей директории
+current_dir = os.path.abspath(os.path.dirname(__file__))
 
+# Сформировать путь к папке plugins (на уровень выше текущей директории)
+plugins_folder = os.path.join(current_dir, '..', 'plugins')
+
+# Добавить этот путь в список sys.path
+sys.path.append(plugins_folder)
+
+# Осуществить импорты, включая операторы
 from airflow import DAG
 from airflow.operators.dummy_operator import DummyOperator
 from airflow.operators.python_operator import PythonOperator
-from datetime import datetime, timedelta
 from operators.email_extract_operator import EmailExtractOperator
 
 default_args = {
