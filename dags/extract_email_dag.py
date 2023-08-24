@@ -1,8 +1,8 @@
 import os
 import sys
 from airflow import DAG
-from airflow.operators.dummy_operator import DummyOperator
-from airflow.operators.python_operator import PythonOperator
+from airflow.operators.empty.EmptyOperator import EmptyOperator
+from airflow.operators.python.PythonOperator import PythonOperator
 from operators.email_extract_operator import EmailExtractOperator
 from datetime import datetime, timedelta
 
