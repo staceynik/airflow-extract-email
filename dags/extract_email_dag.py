@@ -1,8 +1,7 @@
 import os
 import sys
 from airflow import DAG
-from airflow.operators.python_operator import PythonOperator
-from plugins.operators.email_extract_operator import EmailExtractOperator
+from airflow.operators.dummy_operator import DummyOperator
 from datetime import datetime, timedelta
 
 # Получить абсолютный путь к текущей директории
@@ -14,7 +13,9 @@ plugins_folder = os.path.join(current_dir, '..', 'plugins')
 # Добавить этот путь в список sys.path
 sys.path.append(plugins_folder)
 
-# Осуществить импорты, включая операторы
+# Теперь импортируйте ваш оператор и другие модули после добавления пути к sys.path
+from airflow.operators.python import PythonOperator
+from plugins.operators.email_extract_operator import EmailExtractOperator
 
 default_args = {
     'owner': 'airflow',
@@ -34,7 +35,7 @@ start_task = DummyOperator(task_id='start', dag=dag)
 
 extract_task = PythonOperator(
     task_id='extract_emails',
-    python_callable=EmailExtractOperator(),
+    python_callable=EmailExtractOperator().execute,  # Обратите внимание на добавление .execute
     dag=dag,
 )
 
