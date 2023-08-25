@@ -2,6 +2,7 @@ from airflow.models import BaseOperator
 from airflow.utils.decorators import apply_defaults
 import requests
 import psycopg2
+import json
 
 class EmailExtractOperator(BaseOperator):
     @apply_defaults
@@ -18,16 +19,17 @@ class EmailExtractOperator(BaseOperator):
 
         self.log.info("Extracted %d comments with emails ending with 'us'", len(filtered_comments))
 
+        with open('variables.json') as f:
+            variables = json.load(f)
+
         self.log.info("Connecting to the database...")
         connection = psycopg2.connect(
-            host="postgres.cxubmpofrvqu.us-east-1.rds.amazonaws.com",
-            port="5432",
-            user="postgres",
-            password="postgres",
-            dbname="postgres"
+            host=variables["my_db_host"],
+            port=variables["my_db_port"],
+            user=variables["my_db_user"],
+            password=variables["my_db_password"],
+            dbname=variables["my_db_name"]
         )
-
-        self.log.info("Connected to the database")
 
         cursor = connection.cursor()
         cursor.execute("""
@@ -37,19 +39,14 @@ class EmailExtractOperator(BaseOperator):
                 comment TEXT
             )
         """)
-        self.log.info("Executed table creation query.")
 
         for comment in filtered_comments:
             cursor.execute(
                 "INSERT INTO extracted_emails (email, comment) VALUES (%s, %s)",
                 (comment['email'], comment['body'])
             )
-            self.log.info(f"Inserted comment {comment['body']} from {comment['email']}")
 
         connection.commit()
         cursor.close()
         connection.close()
 
-        cursor.execute("SELECT to_regclass('public.extracted_emails');")
-        result = cursor.fetchone()
-        self.log.info(f"Check table existence: {result}")
